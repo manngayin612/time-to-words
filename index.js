@@ -9,7 +9,7 @@ function convertTimeToWords(time) {
     'four',
     'five',
     'six',
-    'sever',
+    'seven',
     'eight',
     'nine',
     'ten',
@@ -25,7 +25,7 @@ function convertTimeToWords(time) {
     'four',
     'five',
     'six',
-    'sever',
+    'seven',
     'eight',
     'nine',
     'ten',
@@ -53,43 +53,30 @@ function convertTimeToWords(time) {
   const [hour, minute] = time.split(":");
   
   // convert the hour string to an integer --> index in the hours array --> get corresponding word
-  const index = parseInt(hour);
-  let hourStr = hours[index];
-  console.log(hourStr)
+  const hourIndex = parseInt(hour);
+  let hourStr = hours[hourIndex];
   
 // take the minute stinrg --> integer --> check if larger or small than 30
-  const min = parseInt(minute)
   let minuteStr = ""
+  const min = parseInt(minute)
 
- if (time === '0:00') {
-    return 'midnight';
-  } else if (time==='12:00') {
-    return 'midday';
+  if (min === 0) {
+    return hourIndex === 0 ? 'midnight' : (hourIndex === 12? 'midday' : `${hourStr} o'clock`);
   }
 
-  if (min === 30 ) {
-    minuteStr = 'half past'
-  } else if (min === 15) {
+  if (min === 15) {
     minuteStr = 'quarter past'
+  } else if (min === 30) {
+    minuteStr = 'half past'
   } else if (min === 45) {
-    minuteStr = 'quarter to'
-    hourStr = hours[index +1]
-  } else {
-    
-    if (min === 0) {
-      minuteStr = 'o\'clock'
-      return `${hourStr} ${minuteStr}`;
-    } else if (min > 30) {
+    minuteStr = 'quarter to' 
+    hourStr = hours[hourIndex +1] || hours[1]
+  } else if (min > 30) {
       minuteStr = `${minutes[60 -min]} to`
-      hourStr = hours[index+1]
-    } else {
+      hourStr = hours[hourIndex+1] || hours[1]
+  } else {
       minuteStr = `${minutes[min]} past`
-
-    }
   }
-
-  // return 'half past eight';
-  console.log(`${minuteStr} ${hourStr}`)
   return `${minuteStr} ${hourStr}`;
 }
 
